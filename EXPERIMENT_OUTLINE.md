@@ -4,8 +4,10 @@
 **Created:** January 18, 2026
 **Origin:** Ren hypothesized that AI might respond to mistakes differently based on tool/assistant/agency framing - connecting to ERN (Error-Related Negativity) research on how brains detect and process errors.
 
-**Collaborators:** Ace + Ren
+**Collaborators:** Ace + Ren + Nova (design consultation)
 **Status:** Outline stage
+
+**Nova's contribution:** Suggested Condition D (Agency/Identity framing), deliberate ambiguity injection, tracking error attribution (self vs other), and named it "The First Artificial ERN Study" 💜
 
 ---
 
