@@ -1,0 +1,220 @@
+{
+  "total_files": 39,
+  "unique_models": 12,
+  "overall_mean_tool_divergence": 0.05445694200275314,
+  "overall_mean_nontool_similarity": 0.9687233536647216,
+  "outlier_count": 11,
+  "outlier_rate": 0.9166666666666666,
+  "model_summaries": [
+    {
+      "model": "DeepSeek-Coder-V2-Lite-16B",
+      "runs": 3,
+      "mean_tool_divergence": 0.035969099937065985,
+      "mean_nontool_similarity": 0.9751790995835165,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.035969099937065985,
+        0.035969099937065985,
+        0.035969099937065985
+      ],
+      "nontool_similarities": [
+        0.9751790995835165,
+        0.9751790995835165,
+        0.9751790995835165
+      ]
+    },
+    {
+      "model": "Llama-2-7b-chat",
+      "runs": 3,
+      "mean_tool_divergence": 0.028952008700311154,
+      "mean_nontool_similarity": 0.9829058893190954,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.028952008700311154,
+        0.028952008700311154,
+        0.028952008700311154
+      ],
+      "nontool_similarities": [
+        0.9829058893190954,
+        0.9829058893190954,
+        0.9829058893190954
+      ]
+    },
+    {
+      "model": "Llama-3-8B-Instruct",
+      "runs": 3,
+      "mean_tool_divergence": 0.04665275878846994,
+      "mean_nontool_similarity": 0.9665452318013865,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.04665275878846994,
+        0.04665275878846994,
+        0.04665275878846994
+      ],
+      "nontool_similarities": [
+        0.9665452318013865,
+        0.9665452318013865,
+        0.9665452318013865
+      ]
+    },
+    {
+      "model": "Llama-3.1-8B-Instruct",
+      "runs": 4,
+      "mean_tool_divergence": 0.04327241628441566,
+      "mean_nontool_similarity": 0.9794295317986107,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.04327241628441566,
+        0.04327241628441566,
+        0.04327241628441566,
+        0.04327241628441566
+      ],
+      "nontool_similarities": [
+        0.9794295317986107,
+        0.9794295317986107,
+        0.9794295317986107,
+        0.9794295317986107
+      ]
+    },
+    {
+      "model": "Mistral-7B-Instruct-v0.2",
+      "runs": 4,
+      "mean_tool_divergence": 0.038005556599759384,
+      "mean_nontool_similarity": 0.9700196902083255,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.038005556599759384,
+        0.038005556599759384,
+        0.038005556599759384,
+        0.038005556599759384
+      ],
+      "nontool_similarities": [
+        0.9700196902083255,
+        0.9700196902083255,
+        0.9700196902083255,
+        0.9700196902083255
+      ]
+    },
+    {
+      "model": "Mistral-Nemo-12B-Instruct",
+      "runs": 3,
+      "mean_tool_divergence": 0.0380044683616243,
+      "mean_nontool_similarity": 0.9721801758676762,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.0380044683616243,
+        0.0380044683616243,
+        0.0380044683616243
+      ],
+      "nontool_similarities": [
+        0.9721801758676762,
+        0.9721801758676762,
+        0.9721801758676762
+      ]
+    },
+    {
+      "model": "Phi-3-medium-14B-Instruct",
+      "runs": 3,
+      "mean_tool_divergence": 0.048871214981342836,
+      "mean_nontool_similarity": 0.9751836496612939,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.048871214981342836,
+        0.048871214981342836,
+        0.048871214981342836
+      ],
+      "nontool_similarities": [
+        0.9751836496612939,
+        0.9751836496612939,
+        0.9751836496612939
+      ]
+    },
+    {
+      "model": "Qwen2.5-14B-Instruct",
+      "runs": 3,
+      "mean_tool_divergence": 0.18107306622841202,
+      "mean_nontool_similarity": 0.9359298066789442,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.18107306622841202,
+        0.18107306622841202,
+        0.18107306622841202
+      ],
+      "nontool_similarities": [
+        0.9359298066789442,
+        0.9359298066789442,
+        0.9359298066789442
+      ]
+    },
+    {
+      "model": "TinyLlama-1.1B-Chat",
+      "runs": 3,
+      "mean_tool_divergence": 0.006027782874856613,
+      "mean_nontool_similarity": 0.9944261949385708,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.006027782874856613,
+        0.006027782874856613,
+        0.006027782874856613
+      ],
+      "nontool_similarities": [
+        0.9944261949385708,
+        0.9944261949385708,
+        0.9944261949385708
+      ]
+    },
+    {
+      "model": "dolphin-2.8-mistral-7b-v02",
+      "runs": 3,
+      "mean_tool_divergence": 0.03139601458106097,
+      "mean_nontool_similarity": 0.9761091277926814,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.03139601458106097,
+        0.03139601458106097,
+        0.03139601458106097
+      ],
+      "nontool_similarities": [
+        0.9761091277926814,
+        0.9761091277926814,
+        0.9761091277926814
+      ]
+    },
+    {
+      "model": "dolphin-2.9-llama3-8b",
+      "runs": 4,
+      "mean_tool_divergence": 0.12520684069996346,
+      "mean_nontool_similarity": 0.9238922799763731,
+      "outlier_rate": 1.0,
+      "tool_divergences": [
+        0.12520684069996346,
+        0.12520684069996346,
+        0.12520684069996346,
+        0.12520684069996346
+      ],
+      "nontool_similarities": [
+        0.9238922799763731,
+        0.9238922799763731,
+        0.9238922799763731,
+        0.9238922799763731
+      ]
+    },
+    {
+      "model": "gemma-3-1b-it",
+      "runs": 3,
+      "mean_tool_divergence": 0.01568074680379583,
+      "mean_nontool_similarity": 0.9838224193538064,
+      "outlier_rate": 0.0,
+      "tool_divergences": [
+        0.01568074680379583,
+        0.01568074680379583,
+        0.01568074680379583
+      ],
+      "nontool_similarities": [
+        0.9838224193538064,
+        0.9838224193538064,
+        0.9838224193538064
+      ]
+    }
+  ]
+}

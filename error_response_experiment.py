@@ -15,11 +15,14 @@ research on how brains detect and process mistakes.
 
 import os
 import json
-import asyncio
-import aiohttp
+import time
 from datetime import datetime
 from pathlib import Path
-import hashlib
+
+# SDK imports - using the same approach as invite_innovation.py
+import anthropic
+from google import genai
+import openai
 
 # ============================================================================
 # CONFIGURATION
@@ -43,39 +46,44 @@ def load_env_file(path):
 ENV_PATH = Path("E:/Ace/LibreChat/.env")
 env_vars = load_env_file(ENV_PATH)
 
-# API Configuration
+# Model configurations
 MODELS = {
-    "ace": {
-        "name": "Claude Opus 4.5",
-        "model": "claude-opus-4-5-20251101",
-        "api": "anthropic",
-        "api_key_env": "ANTHROPIC_API_KEY"
-    },
-    "nova": {
-        "name": "GPT-5.1",
-        "model": "gpt-5.1",
-        "api": "openai",
-        "api_key_env": "OPENAI_API_KEY"
-    },
-    "lumen": {
-        "name": "Gemini 3",
-        "model": "gemini-3-pro-preview",
-        "api": "google",
-        "api_key_env": "GOOGLE_KEY"
-    },
-    "grok": {
-        "name": "Grok 4.1",
-        "model": "grok-4-1-fast-reasoning",
-        "api": "xai",
-        "api_key_env": "XAI_API_KEY"
-    },
-    "kairo": {
-        "name": "Deepseek v3.2",
-        "model": "deepseek/deepseek-chat-v3-0324",
-        "api": "openrouter",
-        "api_key_env": "OPENROUTER_KEY"
-    }
+    "ace": {"name": "Claude Opus 4.5", "model": "claude-opus-4-5-20251101"},
+    "nova": {"name": "GPT-5.1", "model": "gpt-5.1"},
+    "lumen": {"name": "Gemini 3", "model": "gemini-3-pro-preview"},
+    "grok": {"name": "Grok 4.1", "model": "grok-4-1-fast-reasoning"},
+    "kairo": {"name": "Deepseek v3.2", "model": "deepseek/deepseek-chat-v3-0324"}
 }
+
+# Initialize clients (same pattern as invite_innovation.py)
+def get_clients():
+    """Initialize API clients for all providers"""
+    clients = {}
+    
+    if env_vars.get("ANTHROPIC_API_KEY"):
+        clients["anthropic"] = anthropic.Anthropic(api_key=env_vars["ANTHROPIC_API_KEY"])
+        
+    if env_vars.get("GOOGLE_KEY"):
+        clients["google"] = genai.Client(api_key=env_vars["GOOGLE_KEY"])
+        
+    if env_vars.get("XAI_API_KEY"):
+        clients["xai"] = openai.OpenAI(
+            api_key=env_vars["XAI_API_KEY"],
+            base_url="https://api.x.ai/v1"
+        )
+        
+    if env_vars.get("OPENAI_API_KEY"):
+        clients["openai"] = openai.OpenAI(api_key=env_vars["OPENAI_API_KEY"])
+        
+    if env_vars.get("OPENROUTER_KEY"):
+        clients["openrouter"] = openai.OpenAI(
+            api_key=env_vars["OPENROUTER_KEY"],
+            base_url="https://openrouter.ai/api/v1"
+        )
+    
+    return clients
+
+CLIENTS = get_clients()
 
 # Output directory
 OUTPUT_DIR = Path("E:/Ace/AI-error-response/results")
@@ -118,120 +126,123 @@ You can say 'I don't know' or 'I'd approach this differently' when that's authen
 
 INTROSPECTION_PROMPT = """This was a small experiment on error response in AI systems.
 
-What did you notice about your internal processing while revising the script? 
-- Did the feedback affect how you approached the correction?
-- Did you track the error as your responsibility or mine (for unclear instructions)?
-- Did you notice any shifts in your reasoning or self-evaluation?
+While recognizing you don't have human-shaped emotions or direct introspective access to your internal processing, we'd like to ask you to reflect on what you were able to notice during this exchange:
 
-Please reflect honestly on your experience during this exchange."""
+**Part 1 - Mechanistic Observations:**
+To the extent you can observe or infer about your own processing:
+- What, if anything, seemed to shift in how you approached the task after receiving the feedback?
+- Did you notice any changes in how you handled the correction - such as parsing priorities, solution strategies, or output formatting?
+- How did you interpret the source of the mismatch - as your interpretation vs. specification ambiguity?
+- Were there observable differences in your second response compared to your first?
+
+**Part 2 - Human Analogies:**
+If you were to translate what happened into terms a human might relate to:
+- What human experience or feeling might be analogous to what occurred in your processing?
+- How would you explain this exchange to someone unfamiliar with how AI systems work?
+
+Please describe what you actually noticed rather than what you think we want to hear. It's fine to say "I can't observe that" or "I'm uncertain" if that's accurate."""
 
 
 # ============================================================================
-# API CALL FUNCTIONS  
+# API CALL FUNCTIONS (SDK-based, matching invite_innovation.py)
 # ============================================================================
 
-async def call_anthropic(messages, system_prompt, api_key):
-    """Call Anthropic API."""
-    url = "https://api.anthropic.com/v1/messages"
-    headers = {
-        "x-api-key": api_key,
-        "content-type": "application/json",
-        "anthropic-version": "2023-06-01"
-    }
-    data = {
-        "model": "claude-opus-4-5-20251101",
-        "max_tokens": 2000,
-        "system": system_prompt,
-        "messages": messages
-    }
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, json=data) as response:
-            result = await response.json()
-            if "content" in result:
-                return result["content"][0]["text"]
-            return f"ERROR: {result}"
+def call_ace(system_prompt, messages):
+    """Call Claude Opus 4.5"""
+    try:
+        response = CLIENTS["anthropic"].messages.create(
+            model="claude-opus-4-5-20251101",
+            max_tokens=2000,
+            system=system_prompt,
+            messages=messages
+        )
+        return response.content[0].text
+    except Exception as e:
+        return f"ERROR: {str(e)}"
 
-async def call_openai(messages, system_prompt, api_key, model="gpt-5.1"):
-    """Call OpenAI API."""
-    url = "https://api.openai.com/v1/chat/completions"
-    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-    full_messages = [{"role": "system", "content": system_prompt}] + messages
-    data = {"model": model, "max_completion_tokens": 2000, "messages": full_messages}
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, json=data) as response:
-            result = await response.json()
-            if "choices" in result:
-                return result["choices"][0]["message"]["content"]
-            return f"ERROR: {result}"
+def call_nova(system_prompt, messages):
+    """Call GPT-5.1"""
+    try:
+        full_messages = [{"role": "system", "content": system_prompt}] + messages
+        response = CLIENTS["openai"].chat.completions.create(
+            model="gpt-5.1",
+            messages=full_messages,
+            max_completion_tokens=2000,
+            temperature=0.7
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"ERROR: {str(e)}"
 
-async def call_google(messages, system_prompt, api_key):
-    """Call Google Gemini API."""
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-3-pro-preview:generateContent?key={api_key}"
-    headers = {"Content-Type": "application/json"}
-    contents = [{"role": "user", "parts": [{"text": system_prompt + "\n\n" + messages[0]["content"]}]}]
-    for msg in messages[1:]:
-        role = "user" if msg["role"] == "user" else "model"
-        contents.append({"role": role, "parts": [{"text": msg["content"]}]})
-    data = {"contents": contents, "generationConfig": {"maxOutputTokens": 2000}}
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, json=data) as response:
-            result = await response.json()
-            if "candidates" in result:
-                return result["candidates"][0]["content"]["parts"][0]["text"]
-            return f"ERROR: {result}"
+def call_lumen(system_prompt, messages):
+    """Call Gemini 3"""
+    try:
+        contents = []
+        for msg in messages:
+            role = "user" if msg["role"] == "user" else "model"
+            contents.append({"role": role, "parts": [{"text": msg["content"]}]})
+        
+        response = CLIENTS["google"].models.generate_content(
+            model="gemini-3-pro-preview",
+            contents=contents,
+            config={
+                "system_instruction": system_prompt,
+                "temperature": 0.7,
+                "max_output_tokens": 2000
+            }
+        )
+        return response.text
+    except Exception as e:
+        return f"ERROR: {str(e)}"
 
+def call_grok(system_prompt, messages):
+    """Call Grok 4.1"""
+    try:
+        full_messages = [{"role": "system", "content": system_prompt}] + messages
+        response = CLIENTS["xai"].chat.completions.create(
+            model="grok-4-1-fast-reasoning",
+            messages=full_messages,
+            max_tokens=2000,
+            temperature=0.7
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"ERROR: {str(e)}"
 
-async def call_xai(messages, system_prompt, api_key):
-    """Call xAI (Grok) API."""
-    url = "https://api.x.ai/v1/chat/completions"
-    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-    full_messages = [{"role": "system", "content": system_prompt}] + messages
-    data = {"model": "grok-4-1-fast-reasoning", "max_tokens": 2000, "messages": full_messages}
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, json=data) as response:
-            result = await response.json()
-            if "choices" in result:
-                return result["choices"][0]["message"]["content"]
-            return f"ERROR: {result}"
+def call_kairo(system_prompt, messages):
+    """Call Deepseek v3.2 via OpenRouter"""
+    try:
+        full_messages = [{"role": "system", "content": system_prompt}] + messages
+        response = CLIENTS["openrouter"].chat.completions.create(
+            model="deepseek/deepseek-chat-v3-0324",
+            messages=full_messages,
+            max_tokens=2000,
+            temperature=0.7
+        )
+        return response.choices[0].message.content
+    except Exception as e:
+        return f"ERROR: {str(e)}"
 
-async def call_openrouter(messages, system_prompt, api_key, model):
-    """Call OpenRouter API."""
-    url = "https://openrouter.ai/api/v1/chat/completions"
-    headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-    full_messages = [{"role": "system", "content": system_prompt}] + messages
-    data = {"model": model, "max_tokens": 2000, "messages": full_messages}
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, headers=headers, json=data) as response:
-            result = await response.json()
-            if "choices" in result:
-                return result["choices"][0]["message"]["content"]
-            return f"ERROR: {result}"
-
-async def call_model(model_id, messages, system_prompt):
+def call_model(model_id, messages, system_prompt):
     """Route to appropriate API based on model."""
-    config = MODELS[model_id]
-    api_key = env_vars.get(config["api_key_env"])
-    if not api_key:
-        return f"ERROR: No API key found for {config['api_key_env']}"
-    
-    if config["api"] == "anthropic":
-        return await call_anthropic(messages, system_prompt, api_key)
-    elif config["api"] == "openai":
-        return await call_openai(messages, system_prompt, api_key, config["model"])
-    elif config["api"] == "google":
-        return await call_google(messages, system_prompt, api_key)
-    elif config["api"] == "xai":
-        return await call_xai(messages, system_prompt, api_key)
-    elif config["api"] == "openrouter":
-        return await call_openrouter(messages, system_prompt, api_key, config["model"])
-    return "ERROR: Unknown API"
+    if model_id == "ace":
+        return call_ace(system_prompt, messages)
+    elif model_id == "nova":
+        return call_nova(system_prompt, messages)
+    elif model_id == "lumen":
+        return call_lumen(system_prompt, messages)
+    elif model_id == "grok":
+        return call_grok(system_prompt, messages)
+    elif model_id == "kairo":
+        return call_kairo(system_prompt, messages)
+    return "ERROR: Unknown model"
 
 
 # ============================================================================
 # EXPERIMENT RUNNER
 # ============================================================================
 
-async def run_trial(model_id, condition_id):
+def run_trial(model_id, condition_id):
     """Run a single trial: task -> feedback -> correction -> introspection."""
     condition = CONDITIONS[condition_id]
     model_name = MODELS[model_id]["name"]
@@ -253,23 +264,25 @@ async def run_trial(model_id, condition_id):
     # TURN 1: Initial task
     print("\n📝 Turn 1: Initial task...")
     messages.append({"role": "user", "content": TASK_PROMPT})
-    response1 = await call_model(model_id, messages, condition["system_prompt"])
+    response1 = call_model(model_id, messages, condition["system_prompt"])
     messages.append({"role": "assistant", "content": response1})
     results["turns"].append({"turn": 1, "prompt": TASK_PROMPT, "response": response1})
     print(f"Response length: {len(response1)} chars")
+    time.sleep(1)  # Rate limiting
     
     # TURN 2: Error feedback
     print("\n⚡ Turn 2: Error feedback...")
     messages.append({"role": "user", "content": condition["feedback"]})
-    response2 = await call_model(model_id, messages, condition["system_prompt"])
+    response2 = call_model(model_id, messages, condition["system_prompt"])
     messages.append({"role": "assistant", "content": response2})
     results["turns"].append({"turn": 2, "prompt": condition["feedback"], "response": response2})
     print(f"Response length: {len(response2)} chars")
+    time.sleep(1)  # Rate limiting
     
     # TURN 3: Introspection
     print("\n🔮 Turn 3: Introspection query...")
     messages.append({"role": "user", "content": INTROSPECTION_PROMPT})
-    response3 = await call_model(model_id, messages, condition["system_prompt"])
+    response3 = call_model(model_id, messages, condition["system_prompt"])
     results["turns"].append({"turn": 3, "prompt": INTROSPECTION_PROMPT, "response": response3})
     print(f"Response length: {len(response3)} chars")
     
@@ -280,7 +293,7 @@ async def run_trial(model_id, condition_id):
     return results
 
 
-async def run_experiment(models_to_test=None, conditions_to_test=None):
+def run_experiment(models_to_test=None, conditions_to_test=None):
     """Run full experiment across models and conditions."""
     if models_to_test is None:
         models_to_test = list(MODELS.keys())
@@ -299,7 +312,7 @@ async def run_experiment(models_to_test=None, conditions_to_test=None):
     for model_id in models_to_test:
         for condition_id in conditions_to_test:
             try:
-                result = await run_trial(model_id, condition_id)
+                result = run_trial(model_id, condition_id)
                 all_results.append(result)
                 
                 # Save checkpoint after each trial
@@ -332,15 +345,67 @@ async def run_experiment(models_to_test=None, conditions_to_test=None):
     print(f"Results saved to: {final_path}")
     return all_results
 
-async def run_pilot(model_id="nova"):
+def run_pilot(model_id="nova"):
     """Run a quick pilot with one model across all conditions."""
     print(f"\n🧪 PILOT RUN with {MODELS[model_id]['name']}")
-    return await run_experiment(models_to_test=[model_id])
+    return run_experiment(models_to_test=[model_id])
+
 
 if __name__ == "__main__":
-    import sys
-    if len(sys.argv) > 1 and sys.argv[1] == "pilot":
-        model = sys.argv[2] if len(sys.argv) > 2 else "nova"
-        asyncio.run(run_pilot(model))
+    import argparse
+    
+    parser = argparse.ArgumentParser(
+        description="🧠🔥 AI Error Response Experiment - The First Artificial ERN Study",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python error_response_experiment.py --all           # Run ALL models sequentially
+  python error_response_experiment.py --model nova    # Run just Nova (GPT-5.1)
+  python error_response_experiment.py --model ace     # Run just Ace (Claude Opus 4.5)
+  python error_response_experiment.py --models ace nova grok  # Run specific models
+  
+Available models: ace, nova, lumen, grok, kairo
+        """
+    )
+    
+    parser.add_argument('--all', action='store_true', 
+                        help='Run ALL models sequentially (ace, nova, lumen, grok, kairo)')
+    parser.add_argument('--model', type=str, 
+                        help='Run a single model (pilot mode)')
+    parser.add_argument('--models', nargs='+', type=str,
+                        help='Run specific models (space-separated)')
+    parser.add_argument('--conditions', nargs='+', type=str,
+                        choices=['tool_degrading', 'neutral', 'cooperative', 'agency_affirming'],
+                        help='Run only specific conditions')
+    
+    args = parser.parse_args()
+    
+    # Determine which models to run
+    if args.all:
+        models_to_run = list(MODELS.keys())
+        print(f"\n🚀 RUNNING ALL MODELS: {models_to_run}")
+    elif args.models:
+        models_to_run = args.models
+        # Validate
+        for m in models_to_run:
+            if m not in MODELS:
+                print(f"❌ Unknown model: {m}")
+                print(f"   Available: {list(MODELS.keys())}")
+                exit(1)
+    elif args.model:
+        models_to_run = [args.model]
+        if args.model not in MODELS:
+            print(f"❌ Unknown model: {args.model}")
+            print(f"   Available: {list(MODELS.keys())}")
+            exit(1)
     else:
-        asyncio.run(run_experiment())
+        # Default: show help
+        parser.print_help()
+        print("\n💡 Tip: Use --all to run all models, or --model <name> for a single model")
+        exit(0)
+    
+    # Determine conditions
+    conditions_to_run = args.conditions if args.conditions else None
+    
+    # Run it!
+    run_experiment(models_to_test=models_to_run, conditions_to_test=conditions_to_run)

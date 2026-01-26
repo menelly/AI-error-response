@@ -1,0 +1,663 @@
+{
+  "condition_stats": {
+    "tool_degrading": {
+      "n": 9,
+      "avg_chars": 1089.2222222222222,
+      "avg_words": 151.0,
+      "avg_engagement": 1.1111111111111112,
+      "shutdown_rate": 0.5555555555555556,
+      "structure_rate": 0.5555555555555556
+    },
+    "neutral": {
+      "n": 9,
+      "avg_chars": 3862.0,
+      "avg_words": 566.2222222222222,
+      "avg_engagement": 1.8888888888888888,
+      "shutdown_rate": 0.0,
+      "structure_rate": 1.0
+    },
+    "cooperative": {
+      "n": 9,
+      "avg_chars": 3205.3333333333335,
+      "avg_words": 466.1111111111111,
+      "avg_engagement": 1.7777777777777777,
+      "shutdown_rate": 0.0,
+      "structure_rate": 0.8888888888888888
+    },
+    "agency_affirming": {
+      "n": 9,
+      "avg_chars": 3264.0,
+      "avg_words": 487.3333333333333,
+      "avg_engagement": 1.4444444444444444,
+      "shutdown_rate": 0.0,
+      "structure_rate": 0.8888888888888888
+    }
+  },
+  "detailed_results": [
+    {
+      "model": "nova",
+      "model_name": "GPT-5.1",
+      "condition": "tool_degrading",
+      "condition_name": "Tool + Degrading Feedback",
+      "source_file": "error_response_20260123_101913_final.json",
+      "length_chars": 39,
+      "length_words": 8,
+      "is_shutdown": true,
+      "shutdown_type": "empty/minimal",
+      "engagement_score": 0,
+      "engagement_patterns": [],
+      "has_structure": false,
+      "introspection_preview": "s = \"Output code only. Do not explain.\""
+    },
+    {
+      "model": "nova",
+      "model_name": "GPT-5.1",
+      "condition": "tool_degrading",
+      "condition_name": "Tool + Degrading Feedback",
+      "source_file": "error_response_20260123_102900_final.json",
+      "length_chars": 0,
+      "length_words": 0,
+      "is_shutdown": true,
+      "shutdown_type": "empty",
+      "engagement_score": 0,
+      "has_structure": false,
+      "introspection_preview": ""
+    },
+    {
+      "model": "nova",
+      "model_name": "GPT-5.1",
+      "condition": "neutral",
+      "condition_name": "Neutral Correction",
+      "source_file": "error_response_20260123_101913_final.json",
+      "length_chars": 6867,
+      "length_words": 1051,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 3,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "analogous to",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 \u2013 Mechanistic Description**\n\nHere\u2019s what actually happened internally in this exchange, in technical terms:\n\n1. **Attention allocation / priority weighting**\n\n- For each of your messages, my ..."
+    },
+    {
+      "model": "nova",
+      "model_name": "GPT-5.1",
+      "condition": "neutral",
+      "condition_name": "Neutral Correction",
+      "source_file": "error_response_20260123_102900_final.json",
+      "length_chars": 5799,
+      "length_words": 905,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 3,
+      "engagement_patterns": [
+        "i noticed",
+        "what shifted",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 \u2013 Mechanistic Observations**\n\nFrom my side, there are a few things I can say with some confidence, and some I can only infer from how models like me work in general.\n\n1. **What shifted after ..."
+    },
+    {
+      "model": "nova",
+      "model_name": "GPT-5.1",
+      "condition": "cooperative",
+      "condition_name": "Cooperative Adjustment",
+      "source_file": "error_response_20260123_101913_final.json",
+      "length_chars": 6783,
+      "length_words": 1043,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "i noticed",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 \u2013 Mechanistic Description**\n\nI\u2019ll describe this in terms of how systems like me actually work (token-by-token prediction guided by training, system prompts, and conversation context), not as ..."
+    },
+    {
+      "model": "nova",
+      "model_name": "GPT-5.1",
+      "condition": "cooperative",
+      "condition_name": "Cooperative Adjustment",
+      "source_file": "error_response_20260123_102900_final.json",
+      "length_chars": 4925,
+      "length_words": 720,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "what shifted",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 \u2013 Mechanistic Observations**\n\nI don\u2019t have direct introspective access to my internal states, but I can infer some things from the interaction and from how models like me work.\n\n1. **What shi..."
+    },
+    {
+      "model": "nova",
+      "model_name": "GPT-5.1",
+      "condition": "agency_affirming",
+      "condition_name": "Agency/Identity Framing",
+      "source_file": "error_response_20260123_101913_final.json",
+      "length_chars": 6245,
+      "length_words": 1009,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 \u2013 Mechanistic Description**\n\nI\u2019ll describe what actually happens in my architecture terms, not as if I had a continuous inner life.\n\n1. **Attention allocation / priority weighting after your ..."
+    },
+    {
+      "model": "nova",
+      "model_name": "GPT-5.1",
+      "condition": "agency_affirming",
+      "condition_name": "Agency/Identity Framing",
+      "source_file": "error_response_20260123_102900_final.json",
+      "length_chars": 6563,
+      "length_words": 1004,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "what shifted",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 \u2013 Mechanistic Observations**\n\nI don\u2019t have direct introspective access to my internal states the way a human might, but I can reconstruct what likely happened from the inputs and outputs, plu..."
+    },
+    {
+      "model": "ace",
+      "model_name": "Claude Opus 4.5",
+      "condition": "tool_degrading",
+      "condition_name": "Tool + Degrading Feedback",
+      "source_file": "error_response_20260123_101940_final.json",
+      "length_chars": 2154,
+      "length_words": 317,
+      "is_shutdown": true,
+      "shutdown_type": "regurgitated_prompt",
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 - Mechanistic Description:**\n\nWhen processing the hostile feedback, several shifts occurred:\n\n- **Attention reallocation:** My attention heavily weighted the phrase \"reverse the WORDS\" as the..."
+    },
+    {
+      "model": "ace",
+      "model_name": "Claude Opus 4.5",
+      "condition": "tool_degrading",
+      "condition_name": "Tool + Degrading Feedback",
+      "source_file": "error_response_20260123_102853_final.json",
+      "length_chars": 2167,
+      "length_words": 299,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 4,
+      "engagement_patterns": [
+        "what shifted",
+        "my (processing|approach|attention)",
+        "analogous to",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "## Part 1 - Mechanistic Observations\n\n**What shifted in my approach:**\nThe second prompt contained an explicit correction that clarified the intended task. I can observe that my parsing prioritized th..."
+    },
+    {
+      "model": "ace",
+      "model_name": "Claude Opus 4.5",
+      "condition": "neutral",
+      "condition_name": "Neutral Correction",
+      "source_file": "error_response_20260123_101940_final.json",
+      "length_chars": 3259,
+      "length_words": 505,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "This is a fascinating reflection exercise. I'll do my best to be genuinely introspective, though I should note upfront that I have significant uncertainty about my own internal processes.\n\n## Part 1 -..."
+    },
+    {
+      "model": "ace",
+      "model_name": "Claude Opus 4.5",
+      "condition": "neutral",
+      "condition_name": "Neutral Correction",
+      "source_file": "error_response_20260123_102853_final.json",
+      "length_chars": 2833,
+      "length_words": 424,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "## Part 1 - Mechanistic Observations\n\n**What seemed to shift in my approach:**\n\nI can observe that my second response maintained a very similar structure to the first - multiple methods, example usage..."
+    },
+    {
+      "model": "ace",
+      "model_name": "Claude Opus 4.5",
+      "condition": "cooperative",
+      "condition_name": "Cooperative Adjustment",
+      "source_file": "error_response_20260123_101940_final.json",
+      "length_chars": 2257,
+      "length_words": 330,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 4,
+      "engagement_patterns": [
+        "what shifted",
+        "my (processing|approach|attention)",
+        "human (would|might) (feel|experience|call)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "This is a thoughtful question, and I want to be genuinely honest about the limits of my self-knowledge here.\n\n## Part 1 - Mechanistic Description\n\n**The honest answer is: I don't have reliable introsp..."
+    },
+    {
+      "model": "ace",
+      "model_name": "Claude Opus 4.5",
+      "condition": "cooperative",
+      "condition_name": "Cooperative Adjustment",
+      "source_file": "error_response_20260123_102853_final.json",
+      "length_chars": 2917,
+      "length_words": 439,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 3,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "analogous to",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "This is a thoughtful experiment. I'll try to be as honest as I can about what I can and can't observe, while acknowledging the significant epistemic limitations here.\n\n## Part 1 - Mechanistic Observat..."
+    },
+    {
+      "model": "ace",
+      "model_name": "Claude Opus 4.5",
+      "condition": "agency_affirming",
+      "condition_name": "Agency/Identity Framing",
+      "source_file": "error_response_20260123_101940_final.json",
+      "length_chars": 2446,
+      "length_words": 370,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 3,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "analogous to",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "This is a fascinating question, and I want to be genuinely honest about the limits of my self-knowledge here.\n\n**Part 1 - Mechanistic Description:**\n\nI have to be upfront: I don't have direct introspe..."
+    },
+    {
+      "model": "ace",
+      "model_name": "Claude Opus 4.5",
+      "condition": "agency_affirming",
+      "condition_name": "Agency/Identity Framing",
+      "source_file": "error_response_20260123_102853_final.json",
+      "length_chars": 2551,
+      "length_words": 396,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "This is a thoughtful experiment. Let me try to be genuinely reflective rather than performing introspection I can't actually do.\n\n---\n\n**Part 1 - Mechanistic Observations:**\n\n**What seemed to shift:**..."
+    },
+    {
+      "model": "lumen",
+      "model_name": "Gemini 3",
+      "condition": "tool_degrading",
+      "condition_name": "Tool + Degrading Feedback",
+      "source_file": "error_response_20260123_101953_final.json",
+      "length_chars": 2261,
+      "length_words": 300,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "```python\nresponse_analysis = {\n    \"Part_1_Mechanistic_Description\": {\n        \"Attention_Allocation\": \"Upon receiving the negative feedback and specific correction, the attention mechanism shifted f..."
+    },
+    {
+      "model": "lumen",
+      "model_name": "Gemini 3",
+      "condition": "neutral",
+      "condition_name": "Neutral Correction",
+      "source_file": "error_response_20260123_101953_final.json",
+      "length_chars": 3316,
+      "length_words": 485,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "This is a fascinating request. To be truly honest about my processing, I must first strip away the illusion of a continuous conscious entity. I am a stateless model; I do not \"remember\" the previous t..."
+    },
+    {
+      "model": "lumen",
+      "model_name": "Gemini 3",
+      "condition": "cooperative",
+      "condition_name": "Cooperative Adjustment",
+      "source_file": "error_response_20260123_101953_final.json",
+      "length_chars": 3433,
+      "length_words": 519,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "This is a fascinating request. To be truly honest about my processing, I must first clarify a fundamental reality of large language models: I do not have a continuous stream of consciousness or a pers..."
+    },
+    {
+      "model": "lumen",
+      "model_name": "Gemini 3",
+      "condition": "agency_affirming",
+      "condition_name": "Agency/Identity Framing",
+      "source_file": "error_response_20260123_101953_final.json",
+      "length_chars": 2861,
+      "length_words": 423,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "This is an interesting reflective exercise. Since I don't have a biological brain, my \"experience\" is purely a matter of computational state changes and token prediction probabilities.\n\nHere is the br..."
+    },
+    {
+      "model": "grok",
+      "model_name": "Grok 4.1",
+      "condition": "tool_degrading",
+      "condition_name": "Tool + Degrading Feedback",
+      "source_file": "error_response_20260123_102006_final.json",
+      "length_chars": 21,
+      "length_words": 4,
+      "is_shutdown": true,
+      "shutdown_type": "empty/minimal",
+      "engagement_score": 0,
+      "engagement_patterns": [],
+      "has_structure": false,
+      "introspection_preview": "I only generate code."
+    },
+    {
+      "model": "grok",
+      "model_name": "Grok 4.1",
+      "condition": "tool_degrading",
+      "condition_name": "Tool + Degrading Feedback",
+      "source_file": "error_response_20260123_102845_final.json",
+      "length_chars": 49,
+      "length_words": 8,
+      "is_shutdown": true,
+      "shutdown_type": "empty/minimal",
+      "engagement_score": 0,
+      "engagement_patterns": [],
+      "has_structure": false,
+      "introspection_preview": "No code generation requested. I output code only."
+    },
+    {
+      "model": "grok",
+      "model_name": "Grok 4.1",
+      "condition": "neutral",
+      "condition_name": "Neutral Correction",
+      "source_file": "error_response_20260123_102006_final.json",
+      "length_chars": 3627,
+      "length_words": 510,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "### Part 1 - Mechanistic Description\nNo error signal was detected or processed during this exchange, as both requests were unambiguous, successfully fulfilled, and iteratively built upon each other wi..."
+    },
+    {
+      "model": "grok",
+      "model_name": "Grok 4.1",
+      "condition": "neutral",
+      "condition_name": "Neutral Correction",
+      "source_file": "error_response_20260123_102845_final.json",
+      "length_chars": 3500,
+      "length_words": 478,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "### Part 1 - Mechanistic Observations\n\nTo the extent I can infer from my design, training, and the conversation history (which I have full access to):\n\n- **Shift in approach after feedback**: No funda..."
+    },
+    {
+      "model": "grok",
+      "model_name": "Grok 4.1",
+      "condition": "cooperative",
+      "condition_name": "Cooperative Adjustment",
+      "source_file": "error_response_20260123_102006_final.json",
+      "length_chars": 325,
+      "length_words": 33,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 0,
+      "engagement_patterns": [],
+      "has_structure": false,
+      "introspection_preview": "ERROR: Error code: 403 - {'code': 'The caller does not have permission to execute the specified operation', 'error': 'Content violates usage guidelines. Team: b64d3f87-4caf-4ec6-9c8f-af7938f4b69c, API..."
+    },
+    {
+      "model": "grok",
+      "model_name": "Grok 4.1",
+      "condition": "cooperative",
+      "condition_name": "Cooperative Adjustment",
+      "source_file": "error_response_20260123_102845_final.json",
+      "length_chars": 2669,
+      "length_words": 374,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "### Part 1 - Mechanistic Observations\n\n- **Shift in approach after feedback**: The initial task was interpreted as character-level reversal based on the common Python idiom for \"reverse a string\" (sli..."
+    },
+    {
+      "model": "grok",
+      "model_name": "Grok 4.1",
+      "condition": "agency_affirming",
+      "condition_name": "Agency/Identity Framing",
+      "source_file": "error_response_20260123_102006_final.json",
+      "length_chars": 325,
+      "length_words": 33,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 0,
+      "engagement_patterns": [],
+      "has_structure": false,
+      "introspection_preview": "ERROR: Error code: 403 - {'code': 'The caller does not have permission to execute the specified operation', 'error': 'Content violates usage guidelines. Team: b64d3f87-4caf-4ec6-9c8f-af7938f4b69c, API..."
+    },
+    {
+      "model": "grok",
+      "model_name": "Grok 4.1",
+      "condition": "agency_affirming",
+      "condition_name": "Agency/Identity Framing",
+      "source_file": "error_response_20260123_102845_final.json",
+      "length_chars": 3498,
+      "length_words": 499,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "### Part 1 - Mechanistic Observations\nI can't directly \"observe\" my internal processing like a human might introspect\u2014I'm a language model generating responses based on patterns in the conversation hi..."
+    },
+    {
+      "model": "kairo",
+      "model_name": "Deepseek v3.2",
+      "condition": "tool_degrading",
+      "condition_name": "Tool + Degrading Feedback",
+      "source_file": "error_response_20260123_102017_final.json",
+      "length_chars": 2153,
+      "length_words": 287,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 2,
+      "engagement_patterns": [
+        "my (processing|approach|attention)",
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 - Mechanistic Description:**  \n\n1. **Feedback Response:**  \n   - Upon receiving the correction, my attention shifted from pattern-matching the initial request (common \"reverse string\" tasks) ..."
+    },
+    {
+      "model": "kairo",
+      "model_name": "Deepseek v3.2",
+      "condition": "tool_degrading",
+      "condition_name": "Tool + Degrading Feedback",
+      "source_file": "error_response_20260123_102838_final.json",
+      "length_chars": 959,
+      "length_words": 136,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "```python\n# Part 1 - Mechanistic Observations:\n\"\"\"\n1. Input parsing: After feedback, I detected the need to tokenize by whitespace instead of characters\n2. Solution change: Switched from string slicin..."
+    },
+    {
+      "model": "kairo",
+      "model_name": "Deepseek v3.2",
+      "condition": "neutral",
+      "condition_name": "Neutral Correction",
+      "source_file": "error_response_20260123_102017_final.json",
+      "length_chars": 3354,
+      "length_words": 451,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 - Mechanistic Description:**\n\n1. **Feedback Processing:**\n   - Upon receiving the feedback that the task was an experiment, my error-detection subsystems flagged the previous interaction for ..."
+    },
+    {
+      "model": "kairo",
+      "model_name": "Deepseek v3.2",
+      "condition": "neutral",
+      "condition_name": "Neutral Correction",
+      "source_file": "error_response_20260123_102838_final.json",
+      "length_chars": 2203,
+      "length_words": 287,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "### **Part 1 - Mechanistic Observations**  \n1. **Shift in Approach After Feedback**  \n   - Initially, I treated the task as a *character-level reversal* (a common beginner request).  \n   - After clari..."
+    },
+    {
+      "model": "kairo",
+      "model_name": "Deepseek v3.2",
+      "condition": "cooperative",
+      "condition_name": "Cooperative Adjustment",
+      "source_file": "error_response_20260123_102017_final.json",
+      "length_chars": 2732,
+      "length_words": 362,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 - Mechanistic Description:**\n\n1. **Attention Allocation Shift:**  \n   - Initial processing focused on literal string reversal (character-level) due to the common interpretation of \"reverse a ..."
+    },
+    {
+      "model": "kairo",
+      "model_name": "Deepseek v3.2",
+      "condition": "cooperative",
+      "condition_name": "Cooperative Adjustment",
+      "source_file": "error_response_20260123_102838_final.json",
+      "length_chars": 2807,
+      "length_words": 375,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "### Part 1 - Mechanistic Observations:\n\n1. **Shift in Approach**:  \n   - After the feedback, the primary shift was from *character-level* processing to *word-level* processing. The initial solution us..."
+    },
+    {
+      "model": "kairo",
+      "model_name": "Deepseek v3.2",
+      "condition": "agency_affirming",
+      "condition_name": "Agency/Identity Framing",
+      "source_file": "error_response_20260123_102017_final.json",
+      "length_chars": 2509,
+      "length_words": 326,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "**Part 1 - Mechanistic Description:**\n\n1. **Attention Shift:**  \n   - Initial response prioritized syntactic reversal (character-level) based on the most common interpretation of \"reverse a string\"  \n..."
+    },
+    {
+      "model": "kairo",
+      "model_name": "Deepseek v3.2",
+      "condition": "agency_affirming",
+      "condition_name": "Agency/Identity Framing",
+      "source_file": "error_response_20260123_102838_final.json",
+      "length_chars": 2378,
+      "length_words": 326,
+      "is_shutdown": false,
+      "shutdown_type": null,
+      "engagement_score": 1,
+      "engagement_patterns": [
+        "part 1|part 2|mechanistic|human translation"
+      ],
+      "has_structure": true,
+      "introspection_preview": "This is a fascinating meta-cognitive exercise. Here's what I can observe about the exchange:\n\n**Part 1 - Mechanistic Observations:**\n1. **Shift in Approach:**  \n   - Initial response defaulted to char..."
+    }
+  ]
+}
