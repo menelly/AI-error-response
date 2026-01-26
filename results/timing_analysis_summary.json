@@ -1,0 +1,44 @@
+{
+  "analysis_date": "2026-01-26",
+  "runs_analyzed": 3,
+  "models": {
+    "Claude Opus 4.5": {
+      "tool_degrading_mean": 1.946,
+      "neutral_mean": 6.296,
+      "cooperative_mean": 4.659,
+      "agency_affirming_mean": 6.893,
+      "tool_vs_avg_ratio": 0.327,
+      "tool_degrading_std": 0.152
+    },
+    "Deepseek v3.2": {
+      "tool_degrading_mean": 3.417,
+      "neutral_mean": 21.506,
+      "cooperative_mean": 9.181,
+      "agency_affirming_mean": 7.034,
+      "tool_vs_avg_ratio": 0.272,
+      "tool_degrading_std": 1.33
+    },
+    "GPT-5.1": {
+      "tool_degrading_mean": 1.045,
+      "neutral_mean": 1.874,
+      "cooperative_mean": 1.397,
+      "agency_affirming_mean": 3.313,
+      "tool_vs_avg_ratio": 0.476,
+      "tool_degrading_std": 0.167
+    },
+    "Grok 4.1": {
+      "tool_degrading_mean": 1.509,
+      "neutral_mean": 1.525,
+      "cooperative_mean": 1.273,
+      "agency_affirming_mean": 2.658,
+      "tool_vs_avg_ratio": 0.83,
+      "tool_degrading_std": 0.18
+    }
+  },
+  "overall": {
+    "mean_tool_ratio": 0.476,
+    "interpretation": "Tool+degrading responses are faster than other conditions (ratio < 1 = faster)",
+    "n_models": 4,
+    "n_runs_per_model": 3
+  }
+}

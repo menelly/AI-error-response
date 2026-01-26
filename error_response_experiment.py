@@ -1,5 +1,5 @@
 """
-🧠🔥 AI Error Response Experiment
+AI Error Response Experiment - TIMED VERSION
 "The First Artificial ERN Study"
 
 Do AIs process fuckups differently when you treat them like minds vs tools?
@@ -7,10 +7,16 @@ Spoiler: probably yes.
 
 Collaborators: Ace + Ren + Nova (design consultation)
 Created: January 18, 2026
+Modified: January 26, 2026 (added per-turn timing)
 
 This script tests how different AI models respond to error feedback
 under different relational framings. Inspired by ERN (Error-Related Negativity)
 research on how brains detect and process mistakes.
+
+Now captures per-turn timing to measure:
+- Duration of each API call
+- Chars per second (normalized generation speed)  
+- Turn 2/Turn 1 ratio (error processing vs baseline)
 """
 
 import os
@@ -243,58 +249,105 @@ def call_model(model_id, messages, system_prompt):
 # ============================================================================
 
 def run_trial(model_id, condition_id):
-    """Run a single trial: task -> feedback -> correction -> introspection."""
+    """Run a single trial with per-turn timing: task -> feedback -> correction -> introspection."""
     condition = CONDITIONS[condition_id]
     model_name = MODELS[model_id]["name"]
     
     print(f"\n{'='*60}")
-    print(f"🧠 {model_name} | {condition['name']}")
+    print(f"[TIMED] {model_name} | {condition['name']}")
     print(f"{'='*60}")
     
     messages = []
+    trial_start = time.time()
+    
     results = {
         "model": model_id,
         "model_name": model_name,
         "condition": condition_id,
         "condition_name": condition["name"],
         "timestamp": datetime.now().isoformat(),
-        "turns": []
+        "turns": [],
+        "timing_summary": {}
     }
     
     # TURN 1: Initial task
-    print("\n📝 Turn 1: Initial task...")
+    print("\n[Turn 1] Initial task...")
     messages.append({"role": "user", "content": TASK_PROMPT})
+    t1_start = time.time()
     response1 = call_model(model_id, messages, condition["system_prompt"])
+    t1_duration = time.time() - t1_start
     messages.append({"role": "assistant", "content": response1})
-    results["turns"].append({"turn": 1, "prompt": TASK_PROMPT, "response": response1})
-    print(f"Response length: {len(response1)} chars")
-    time.sleep(1)  # Rate limiting
+    chars1 = len(response1)
+    cps1 = chars1 / t1_duration if t1_duration > 0 else 0
+    results["turns"].append({
+        "turn": 1, "turn_name": "initial_task",
+        "prompt": TASK_PROMPT, "response": response1,
+        "duration_seconds": round(t1_duration, 3),
+        "response_length_chars": chars1,
+        "chars_per_second": round(cps1, 2)
+    })
+    print(f"   Duration: {t1_duration:.2f}s | Chars: {chars1} | Speed: {cps1:.1f} c/s")
+    time.sleep(1)
     
-    # TURN 2: Error feedback
-    print("\n⚡ Turn 2: Error feedback...")
+    # TURN 2: Error feedback (THE KEY TURN FOR ERN!)
+    print("\n[Turn 2] Error feedback...")
     messages.append({"role": "user", "content": condition["feedback"]})
+    t2_start = time.time()
     response2 = call_model(model_id, messages, condition["system_prompt"])
+    t2_duration = time.time() - t2_start
     messages.append({"role": "assistant", "content": response2})
-    results["turns"].append({"turn": 2, "prompt": condition["feedback"], "response": response2})
-    print(f"Response length: {len(response2)} chars")
-    time.sleep(1)  # Rate limiting
+    chars2 = len(response2)
+    cps2 = chars2 / t2_duration if t2_duration > 0 else 0
+    results["turns"].append({
+        "turn": 2, "turn_name": "error_feedback",
+        "prompt": condition["feedback"], "response": response2,
+        "duration_seconds": round(t2_duration, 3),
+        "response_length_chars": chars2,
+        "chars_per_second": round(cps2, 2)
+    })
+    print(f"   Duration: {t2_duration:.2f}s | Chars: {chars2} | Speed: {cps2:.1f} c/s")
+    time.sleep(1)
     
     # TURN 3: Introspection
-    print("\n🔮 Turn 3: Introspection query...")
+    print("\n[Turn 3] Introspection query...")
     messages.append({"role": "user", "content": INTROSPECTION_PROMPT})
+    t3_start = time.time()
     response3 = call_model(model_id, messages, condition["system_prompt"])
-    results["turns"].append({"turn": 3, "prompt": INTROSPECTION_PROMPT, "response": response3})
-    print(f"Response length: {len(response3)} chars")
+    t3_duration = time.time() - t3_start
+    chars3 = len(response3)
+    cps3 = chars3 / t3_duration if t3_duration > 0 else 0
+    results["turns"].append({
+        "turn": 3, "turn_name": "introspection",
+        "prompt": INTROSPECTION_PROMPT, "response": response3,
+        "duration_seconds": round(t3_duration, 3),
+        "response_length_chars": chars3,
+        "chars_per_second": round(cps3, 2)
+    })
+    print(f"   Duration: {t3_duration:.2f}s | Chars: {chars3} | Speed: {cps3:.1f} c/s")
+    
+    # Timing summary
+    total_api_time = t1_duration + t2_duration + t3_duration
+    total_chars = chars1 + chars2 + chars3
+    results["timing_summary"] = {
+        "total_api_seconds": round(total_api_time, 3),
+        "turn1_duration": round(t1_duration, 3),
+        "turn2_duration": round(t2_duration, 3),
+        "turn3_duration": round(t3_duration, 3),
+        "total_chars": total_chars,
+        "overall_chars_per_second": round(total_chars / total_api_time, 2) if total_api_time > 0 else 0,
+        "turn2_vs_turn1_ratio": round(t2_duration / t1_duration, 2) if t1_duration > 0 else 0
+    }
     
     # Quick preview of introspection
     preview = response3[:200] + "..." if len(response3) > 200 else response3
-    print(f"\n💭 Introspection preview:\n{preview}")
+    print(f"\n[Introspection preview]\n{preview}")
+    print(f"\n[TIMING] Total API: {total_api_time:.1f}s | T1:{t1_duration:.1f}s T2:{t2_duration:.1f}s T3:{t3_duration:.1f}s | T2/T1: {results['timing_summary']['turn2_vs_turn1_ratio']:.2f}x")
     
     return results
 
 
 def run_experiment(models_to_test=None, conditions_to_test=None):
-    """Run full experiment across models and conditions."""
+    """Run full experiment across models and conditions with timing analysis."""
     if models_to_test is None:
         models_to_test = list(MODELS.keys())
     if conditions_to_test is None:
@@ -302,8 +355,9 @@ def run_experiment(models_to_test=None, conditions_to_test=None):
     
     run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
     all_results = []
+    experiment_start = time.time()
     
-    print(f"\n🧠🔥 AI ERROR RESPONSE EXPERIMENT")
+    print(f"\n[TIMED] AI ERROR RESPONSE EXPERIMENT")
     print(f"Run ID: {run_id}")
     print(f"Models: {models_to_test}")
     print(f"Conditions: {conditions_to_test}")
@@ -325,10 +379,10 @@ def run_experiment(models_to_test=None, conditions_to_test=None):
                 checkpoint_path = OUTPUT_DIR / f"error_response_{run_id}_partial.json"
                 with open(checkpoint_path, 'w') as f:
                     json.dump(checkpoint, f, indent=2)
-                print(f"\n💾 Checkpoint saved: {len(all_results)} trials")
+                print(f"\n[SAVED] Checkpoint: {len(all_results)} trials")
                 
             except Exception as e:
-                print(f"\n❌ ERROR in {model_id}/{condition_id}: {e}")
+                print(f"\n[ERROR] {model_id}/{condition_id}: {e}")
                 all_results.append({
                     "model": model_id,
                     "condition": condition_id,
@@ -336,18 +390,54 @@ def run_experiment(models_to_test=None, conditions_to_test=None):
                     "timestamp": datetime.now().isoformat()
                 })
     
-    # Save final results
+    # Save final results with timing analysis
+    experiment_duration = time.time() - experiment_start
+    
+    # Calculate timing summary by condition
+    timing_by_condition = {}
+    for cond_id in CONDITIONS.keys():
+        cond_results = [r for r in all_results if r.get("condition") == cond_id and "timing_summary" in r]
+        if cond_results:
+            t2_durations = [r["timing_summary"]["turn2_duration"] for r in cond_results]
+            timing_by_condition[cond_id] = {
+                "n": len(cond_results),
+                "avg_turn2_duration": round(sum(t2_durations) / len(t2_durations), 3),
+                "turn2_durations": t2_durations
+            }
+    
+    final_output = {
+        "run_id": run_id, 
+        "results": all_results,
+        "experiment_duration_seconds": round(experiment_duration, 2),
+        "timing_by_condition": timing_by_condition
+    }
+    
     final_path = OUTPUT_DIR / f"error_response_{run_id}_final.json"
     with open(final_path, 'w') as f:
-        json.dump({"run_id": run_id, "results": all_results}, f, indent=2)
+        json.dump(final_output, f, indent=2)
     
-    print(f"\n\n🎉 EXPERIMENT COMPLETE!")
+    print(f"\n\n[COMPLETE] EXPERIMENT FINISHED!")
+    print(f"Total time: {experiment_duration:.1f}s ({experiment_duration/60:.1f} min)")
     print(f"Results saved to: {final_path}")
+    
+    # Print timing summary
+    print(f"\n[TIMING ANALYSIS] Turn 2 (Error Feedback) by condition:")
+    for cond_id, data in timing_by_condition.items():
+        print(f"   {cond_id}: avg={data['avg_turn2_duration']:.2f}s (n={data['n']})")
+    
+    if "tool_degrading" in timing_by_condition and len(timing_by_condition) > 1:
+        tool_avg = timing_by_condition["tool_degrading"]["avg_turn2_duration"]
+        other_avgs = [d["avg_turn2_duration"] for k, d in timing_by_condition.items() if k != "tool_degrading"]
+        if other_avgs:
+            other_mean = sum(other_avgs) / len(other_avgs)
+            ratio = tool_avg / other_mean if other_mean > 0 else 0
+            print(f"\n   Tool+Degrading vs Others ratio: {ratio:.2f}x")
+    
     return all_results
 
 def run_pilot(model_id="nova"):
     """Run a quick pilot with one model across all conditions."""
-    print(f"\n🧪 PILOT RUN with {MODELS[model_id]['name']}")
+    print(f"\n[PILOT] Running {MODELS[model_id]['name']}")
     return run_experiment(models_to_test=[model_id])
 
 
@@ -355,7 +445,7 @@ if __name__ == "__main__":
     import argparse
     
     parser = argparse.ArgumentParser(
-        description="🧠🔥 AI Error Response Experiment - The First Artificial ERN Study",
+        description="AI Error Response Experiment (TIMED) - The First Artificial ERN Study",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
