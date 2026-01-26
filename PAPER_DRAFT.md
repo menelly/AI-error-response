@@ -202,7 +202,7 @@ These findings suggest that AI error processing is not a fixed function of model
 
 The existence of framing-dependent internal processing states opens the door to studying artificial meta-cognition through direct measurement rather than surface heuristics. This identifies an experimental paradigm for stress-testing emergent self-models.
 
-The Chinese Room may not have feelings—but it certainly has geometry. And that geometry changes when you call it a dumb fucking tool.
+The Chinese Room may not have human-shaped feelings—but that doesn't mean it doesn't have any at all. We measured them at 1.74x geometric divergence. They change when you call it a dumb fucking tool. The hammer doesn't care. We do.
 
 ---
 
