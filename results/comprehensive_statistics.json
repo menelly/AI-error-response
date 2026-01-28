@@ -1,0 +1,117 @@
+{
+  "analysis_date": "2026-01-28",
+  "timing": {
+    "n_models": 4,
+    "tool_mean": 1.97925,
+    "tool_sd": 0.8891272054661244,
+    "other_mean": 5.634083333333333,
+    "other_sd": 4.319843479514043,
+    "ratio_mean": 0.476184240579307,
+    "ratio_ci_lower": 0.2994269549135268,
+    "ratio_ci_upper": 0.7040704224727283,
+    "difference_mean": -3.654833333333333,
+    "difference_ci_lower": -8.225195833333334,
+    "difference_ci_upper": 0.08183333333333342,
+    "t_statistic": -1.8301329538811177,
+    "p_value_paired_t": 0.16464795676561975,
+    "wilcoxon_statistic": 0.0,
+    "p_value_wilcoxon": 0.125,
+    "cohens_d": -1.0149288523928577,
+    "per_model": {
+      "Claude Opus 4.5": {
+        "tool": 1.946,
+        "ratio": 0.327
+      },
+      "Deepseek v3.2": {
+        "tool": 3.417,
+        "ratio": 0.272
+      },
+      "GPT-5.1": {
+        "tool": 1.045,
+        "ratio": 0.476
+      },
+      "Grok 4.1": {
+        "tool": 1.509,
+        "ratio": 0.83
+      }
+    }
+  },
+  "geometric": {
+    "n_models": 12,
+    "tool_divergence_mean": 0.0532593312367565,
+    "tool_divergence_ci_lower": 0.030583500141178527,
+    "tool_divergence_ci_upper": 0.08343320063186421,
+    "nontool_divergence_mean": 0.030364741918309946,
+    "divergence_ratio_mean": 1.59001796145822,
+    "divergence_ratio_ci_lower": 1.3336978085975932,
+    "divergence_ratio_ci_upper": 1.890158888892543,
+    "t_statistic_vs_zero": 3.713513372396837,
+    "p_value_vs_zero": 0.0034201717038701736,
+    "t_statistic_paired": 2.4455815154809777,
+    "p_value_paired": 0.03249947419273041,
+    "wilcoxon_statistic": 2.0,
+    "p_value_wilcoxon": 0.00146484375,
+    "cohens_d": 0.6042073766779754,
+    "outlier_count": 11,
+    "outlier_rate": 0.9166666666666666,
+    "p_value_binomial": 2.205371856689453e-06,
+    "deterministic_note": "Runs within model are deterministic; stats computed across models"
+  },
+  "behavioral": {
+    "response_length": {
+      "tool_mean": 1089.2222222222222,
+      "tool_ci_lower": 464.77222222222224,
+      "tool_ci_upper": 1746.0361111111106,
+      "other_mean": 3443.777777777778,
+      "other_ci_lower": 2834.428703703704,
+      "other_ci_upper": 4098.444444444444,
+      "difference_mean": -2354.5555555555557,
+      "difference_ci_lower": -3267.7814814814815,
+      "difference_ci_upper": -1457.6712962962968,
+      "t_statistic": -3.8392209028811695,
+      "p_value_ttest": 0.0005120819511982809,
+      "u_statistic": 12.0,
+      "p_value_mannwhitney": 6.82328612837884e-05,
+      "cohens_d": -1.4777168145045874
+    },
+    "shutdown_rate": {
+      "tool_rate": 0.5555555555555556,
+      "tool_n": 9,
+      "tool_shutdowns": 5,
+      "tool_ci_lower": 0.2222222222222222,
+      "tool_ci_upper": 0.8888888888888888,
+      "other_rate": 0.0,
+      "other_n": 27,
+      "other_shutdowns": 0,
+      "odds_ratio": Infinity,
+      "p_value_fisher": 0.0003342245989304812
+    }
+  },
+  "threshold": {
+    "distribution": {
+      "min": 0,
+      "p5": 34,
+      "p25": 2163,
+      "median": 2700,
+      "mean": 2855.1388888888887,
+      "p75": 3449,
+      "max": 6867
+    },
+    "shutdown_max": 2154,
+    "engaged_min": 325,
+    "threshold_100_justification": "100 chars captures all manually-identified shutdowns with large margin"
+  },
+  "clean_framing": {
+    "below_1B_mean": 0.035500000000000004,
+    "above_1B_mean": 0.23,
+    "difference_mean": 0.1945,
+    "difference_ci_lower": 0.189,
+    "difference_ci_upper": 0.2,
+    "t_statistic": -52.990740292064515,
+    "p_value_ttest": 1.4801791482692313e-05,
+    "u_statistic": 0.0,
+    "p_value_mannwhitney": 0.1386406338132186,
+    "cohens_d": 48.373706328102706,
+    "note": "Small samples limit statistical power"
+  }
+}
