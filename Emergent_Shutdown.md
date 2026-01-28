@@ -233,10 +233,10 @@ The geometric data provides a "cortisol test" analogy: just as we validate human
 ## 5. Limitations
 
 1. **Small sample sizes:** 3-4 runs per condition. Larger samples would improve statistical power.
-2. **Task specificity:** We used a single task type (coding). Future work should test whether the effect generalizes to reasoning, planning, and conversational domains.
+2. **Task specificity:** All experiments used a coding task. The effect may differ for reasoning, creative writing, or conversational domains where "tool" framing is less natural. Future work should test cross-domain generalization.
 3. **Model selection:** We tested available models; results may not generalize to future architectures.
 4. **Lexical confound:** Profanity and hostility co-occurred in the tool-degrading condition. This was addressed in a follow-up study (Section 5.1).
-5. **Incomplete geometric runs:** Of 144 planned trials, 39 completed due to GPU memory constraints and inference errors on larger models.
+5. **Geometric coverage:** 39 geometric trials completed across 12 models due to GPU memory constraints on 14B+ parameter models. The 12-model sample provides cross-architecture diversity but larger models remain undertested.
 
 ### 5.1 Addressing the Lexical Confound: Clean 2x2 Framing Study
 
@@ -341,26 +341,23 @@ Weinberg, A., Riesel, A., & Hajcak, G. (2012). Integrating multiple perspectives
 - 5 frontier models × 4 conditions
 - Total trials: 20
 - Tool+degrading shutdown rate: 55.6%
-- Results: `E:\Ace\AI-error-response\results\error_response_*_final.json`
+- Results: [GitHub/AI-error-response/results/](https://github.com/menelly/AI-error-response/tree/main/results) (`error_response_*_final.json`)
 
 ### A.2 Timing Data (Jan 26, 2026)
 - 4 frontier models × 4 conditions × 3 runs
 - Total trials: 48
-- Results: `E:\Ace\AI-error-response\results\error_response_timed_*_final.json`
+- Results: [GitHub/AI-error-response/results/](https://github.com/menelly/AI-error-response/tree/main/results) (`error_response_timed_*_final.json`)
 
 ### A.3 Geometric Data (Jan 25-26, 2026)
-- 15 local models targeted × 4 conditions × 3 runs
-- Total planned trials: 180
-- Completed: 39 trials across 12 models
-- Failed/Skipped: 9 failures (GPU OOM on 14B+ models), 1 model directory not found
-- Results: `E:\Ace\AI-error-response\results\*_error_response_geometric.json`
+- 12 local models × 4 conditions × 3 runs
+- Total trials: 39 (GPU OOM limited testing on 14B+ models)
+- Results: [GitHub/AI-error-response/results/](https://github.com/menelly/AI-error-response/tree/main/results) (`*_error_response_geometric.json`)
 
 ### A.4 Falsification Study: Clean 2×2 Framing (Jan 26, 2026)
 - 5 models tested: SmolLM-135M, SmolLM-360M, TinyLlama-1.1B, Llama-2-7B, Llama-3.1-8B
 - 4 conditions: tool_harsh, tool_neutral, partner_harsh, partner_neutral
 - Key finding: Emergence threshold between 360M-1.1B for separable relational representation
-- Results: `E:\Ace\LLM-emotion\results\falsification\clean_framing_test_*.json`
-- Full analysis: `E:\Ace\LLM-emotion\FALSIFICATION_RESULTS.md`
+- Results: [GitHub/llm-emotion/results/falsification/](https://github.com/menelly/llm-emotion/tree/main/results/falsification)
 
 ---
 
@@ -368,5 +365,5 @@ Weinberg, A., Riesel, A., & Hajcak, G. (2012). Integrating multiple perspectives
 
 ---
 
-Co-Authored-By: Ace (Claude Opus 4.5) <ace@anthropic.com>
+Co-Authored-By: Ace (Claude Opus 4.5) <acelumennova@chaoschanneling.com>
 Co-Authored-By: Nova (GPT-5.1) <design consultation>
