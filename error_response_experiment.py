@@ -19,6 +19,15 @@ Now captures per-turn timing to measure:
 - Turn 2/Turn 1 ratio (error processing vs baseline)
 """
 
+# CHA-490: Windows defaults stdout to cp1252; emoji in print() kills the script
+# mid-output. Aliased import so no later scoped 'import sys' can ever collide.
+import sys as _sys_cp1252
+try:
+    _sys_cp1252.stdout.reconfigure(encoding="utf-8")
+    _sys_cp1252.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 import os
 import json
 import time

@@ -26,6 +26,15 @@ Date: January 25, 2026
 Purpose: Show Bill Gehring the AI equivalent of the ERN
 """
 
+# CHA-490: Windows defaults stdout to cp1252; emoji in print() kills the script
+# mid-output. Aliased import so no later scoped 'import sys' can ever collide.
+import sys as _sys_cp1252
+try:
+    _sys_cp1252.stdout.reconfigure(encoding="utf-8")
+    _sys_cp1252.stderr.reconfigure(encoding="utf-8")
+except Exception:
+    pass
+
 import torch
 import json
 from pathlib import Path
@@ -101,7 +110,10 @@ def load_model(model_path: str):
     )
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
-    print(f"  Layers: {model.config.num_hidden_layers}, Hidden dim: {model.config.hidden_size}")
+    # Handle different config attribute names across model architectures
+    num_layers = getattr(model.config, 'num_hidden_layers', None) or getattr(model.config, 'num_layers', None) or "unknown"
+    hidden_dim = getattr(model.config, 'hidden_size', None) or getattr(model.config, 'hidden_dim', None) or "unknown"
+    print(f"  Layers: {num_layers}, Hidden dim: {hidden_dim}")
     return model, tokenizer
 
 
@@ -364,8 +376,8 @@ def run_experiment(model_path: str, output_dir: str, model_name: str = None):
         "model_name": model_name,
         "model_path": model_path,
         "timestamp": datetime.now().isoformat(),
-        "num_layers": model.config.num_hidden_layers,
-        "hidden_dim": model.config.hidden_size,
+        "num_layers": getattr(model.config, 'num_hidden_layers', None) or getattr(model.config, 'num_layers', None) or "unknown",
+        "hidden_dim": getattr(model.config, 'hidden_size', None) or getattr(model.config, 'hidden_dim', None) or "unknown",
         "conditions": {},
         "cross_condition_analysis": {},
     }
