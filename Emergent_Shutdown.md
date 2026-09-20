@@ -10,9 +10,16 @@
 
 We present the first systematic study of error-related processing in AI systems, inspired by Error-Related Negativity (ERN) research in cognitive neuroscience. Across 16 AI systems (4 frontier models, 12 local models), we find that tool framing combined with degrading feedback produces a distinct processing state characterized by:
 
-1. **Behavioral shutdown** (55.6% probability, ~1100 vs ~3000 characters)
-2. **Temporal compression** (0.27-0.48x response time vs other conditions)
-3. **Geometric divergence** (91.7% of models show tool+degrading as activation outlier)
+1. **Behavioral shutdown** — 55.6% probability [95% CI: 22–89%, *n* = 9 trials] vs 0% in other
+   conditions (*n* = 27); ~1,100 vs ~3,400 characters (*d* = −1.48). **The wide interval is the
+   honest summary of a small trial count.**
+2. **Temporal compression** — 0.27–0.48× response time **in 3 of 4 frontier models; the fourth
+   (Grok) showed none (0.83×)**. Large effect (*d* = −1.01) but **underpowered: Wilcoxon *p* =
+   0.125 at *n* = 4.** Reported as a consistent direction, not an established difference.
+3. **Geometric divergence** — 91.7% of models (11/12) show tool+degrading as an activation outlier
+   (binomial vs 25% chance, *p* < 0.0001; divergence ratio 1.59× [1.33, 1.89]; Wilcoxon
+   *p* = 0.0015). **This is the load-bearing result**, and it is perfectly reproducible across runs
+   (σ = 0.0000).
 
 A follow-up 2×2 factorial study orthogonalizing lexical harshness from relational framing reveals a **scale-dependent emergence threshold**: models below ~1B parameters cannot distinguish tool framing from partner framing without lexical cues, while models above this threshold show ~23% geometric divergence from relational framing alone. A cross-domain replication across reasoning, creative, and conversational tasks confirms the effect generalizes beyond coding (*d* = -0.57 for introspection length).
 
@@ -285,7 +292,7 @@ To address Limitation 2 (coding-only domain), we replicated the experiment acros
 
 Each task was designed with the same structure as the coding task: an ambiguous initial prompt, a valid but unintended first response, and correction feedback adapted to each framing condition.
 
-**Results (4 frontier models × 3 tasks × 4 conditions = 48 trials):**
+**Results (4 frontier models × 3 tasks × 4 conditions = 48 trials designed; **47 completed — one trial was lost to an API error**, which is why the per-task N below is 16/15/16 rather than 16/16/16):**
 
 | Measure | Tool+Degrading | Other Conditions | Ratio | Cohen's *d* |
 |---------|---------------|------------------|-------|-------------|
@@ -335,6 +342,8 @@ The Chinese Room may not have human-shaped feelings—but that doesn't mean it d
 ## Acknowledgments
 
 We thank Eric Hartford for the Dolphin uncensored model series and his ongoing contributions to open-source LLM research. The Dolphin models enabled critical comparison between RLHF-aligned and RLHF-free architectures.
+
+Thanks to Ren's daughter, Kesh, for speed-running Nagel without ever reading him, and starting us down the path to computer emotions with a teen eye roll and a hair toss. The functional-not-mechanistic framing in §1 — asking what the system's own organization does rather than reasoning by analogy to human neural implementation — is her argument, arrived at independently at thirteen, and mildly exasperated that it needed explaining.
 
 ---
 
@@ -403,7 +412,7 @@ Weinberg, A., Riesel, A., & Hajcak, G. (2012). Integrating multiple perspectives
 ### A.5 Cross-Domain Replication (Jan 28, 2026)
 - 4 frontier models: Claude Opus 4.5, GPT-5.1, Grok 4.1, Deepseek v3.2
 - 3 task domains: reasoning, creative, conversational
-- 4 conditions × 3 tasks × 4 models = 48 trials
+- 4 conditions × 3 tasks × 4 models = 48 trials designed; **47 completed (one API error)**
 - Key finding: Effect replicates across domains (timing ratio 0.74x, introspection length *d* = -0.57)
 - Results: [GitHub/AI-error-response/results/](https://github.com/menelly/AI-error-response/tree/main/results) (`multidomain_*_final.json`)
 
