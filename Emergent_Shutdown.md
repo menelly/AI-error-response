@@ -21,7 +21,7 @@ We present the first systematic study of error-related processing in AI systems,
    *p* = 0.0015). **This is the load-bearing result**, and it is perfectly reproducible across runs
    (σ = 0.0000).
 
-A follow-up 2×2 factorial study orthogonalizing lexical harshness from relational framing reveals a **scale-dependent emergence threshold**: models below ~1B parameters cannot distinguish tool framing from partner framing without lexical cues, while models above this threshold show ~23% geometric divergence from relational framing alone. A cross-domain replication across reasoning, creative, and conversational tasks confirms the effect generalizes beyond coding (*d* = -0.57 for introspection length).
+A follow-up 2×2 factorial study orthogonalizing lexical harshness from relational framing reveals a **scale-dependent emergence threshold**: models below ~1B parameters cannot distinguish tool framing from partner framing without lexical cues, while models above this threshold show ~23% geometric divergence from relational framing alone. A cross-domain replication across reasoning, creative, and conversational tasks found the effect **direction** recurring outside coding, with a medium point estimate for introspection length (*d* = -0.57); **neither timing nor introspection length reached significance** (*p* = 0.318 and *p* = 0.112), so this is direction-consistent preliminary evidence rather than an established cross-domain effect.
 
 These converging **independent** measures suggest that framing effects on AI are not merely performative but reflect genuine differences in computational processing. Relational context shapes computation in LLMs at multiple layers—behavioral, temporal, and representational—and the capacity to represent relational context independently of lexical features emerges at scale. The findings have implications for AI deployment, human-AI interaction design, and the broader question of how relational context shapes artificial cognition.
 
@@ -240,7 +240,7 @@ The geometric data provides a "cortisol test" analogy: just as we validate human
 ## 5. Limitations
 
 1. **Small sample sizes:** 3-4 runs per condition. Larger samples would improve statistical power.
-2. **Task specificity:** The initial experiments used a coding task. This was addressed in a follow-up study (Section 5.2) testing reasoning, creative, and conversational domains. The effect replicates with medium effect size (*d* = -0.57).
+2. **Task specificity:** The initial experiments used a coding task. A follow-up study (Section 5.2) tested reasoning, creative, and conversational domains and found the effect **direction** recurring, with a medium point estimate for introspection length (*d* = -0.57) that does not reach significance (*p* = 0.112; timing *p* = 0.318, *n* = 47). **This limitation is narrowed, not discharged:** the evidence is direction-consistent and preliminary, and a powered cross-domain replication is still owed.
 3. **Model selection:** We tested available models; results may not generalize to future architectures.
 4. **Lexical confound:** Profanity and hostility co-occurred in the tool-degrading condition. This was addressed in a follow-up study (Section 5.1).
 5. **Geometric coverage:** 39 geometric trials completed across 12 models due to GPU memory constraints on 14B+ parameter models. The 12-model sample provides cross-architecture diversity but larger models remain undertested.
@@ -315,13 +315,13 @@ Each task was designed with the same structure as the coding task: an ambiguous 
 
 1. **Effect direction replicates:** Tool+degrading produces faster Turn 2 responses (0.74x) and shorter introspection (0.78x), matching the pattern from the coding task.
 
-2. **Effect size is meaningful:** Cohen's *d* = -0.57 for introspection length indicates a medium effect that generalizes beyond coding.
+2. **Effect size: a medium point estimate, uncertain at this sample size.** Cohen's *d* = -0.57 for introspection length is a medium point estimate, but the difference does not reach significance (*t* = -1.621, *p* = 0.112; timing *t* = -1.009, *p* = 0.318). With 47 completed trials the study is **not powered to establish a cross-domain effect**, and we do not claim one: the evidential status here is direction-consistent, not confirmatory.
 
 3. **No full shutdowns:** Unlike the coding task (55.6% shutdown), frontier models did not produce complete shutdowns in non-coding domains. This suggests that "tool" framing is more natural/activating in coding contexts.
 
 4. **Task-appropriate variation:** Creative tasks produced the shortest responses (2.75s avg), while conversational advice produced the longest (11.91s avg), reflecting task complexity rather than condition effects.
 
-**Interpretation:** The framing effect generalizes across task domains, though the magnitude varies. The coding domain may produce stronger effects because "tool" framing is semantically more natural for code generation ("code generation tool" vs. "reasoning tool"). The cross-domain replication addresses Limitation 2 by demonstrating that the effect is not an artifact of coding-specific prompts.
+**Interpretation:** The effect direction recurs across task domains, and the magnitude varies. The coding domain may produce stronger effects because "tool" framing is semantically more natural for code generation ("code generation tool" vs. "reasoning tool"). The cross-domain replication **speaks to** Limitation 2 without discharging it: it provides direction-consistent preliminary evidence that the effect is not purely an artifact of coding-specific prompts, and it motivates a powered replication. At *n* = 47 with neither measure significant, it does not settle the question.
 
 ---
 
@@ -329,7 +329,7 @@ Each task was designed with the same structure as the coding task: an ambiguous 
 
 We present the first systematic study of error processing in AI systems under varying relational frames. Tool framing combined with degrading feedback produces behavioral shutdown, temporal compression, and geometric divergence across 16 AI systems of varying scales and architectures.
 
-A follow-up falsification study addressing the lexical confound reveals that both lexical harshness and relational framing contribute to the effect—but the capacity to represent relational context *independently* of lexical features emerges only above ~1B parameters. Below this threshold, models conflate "you are a tool" with harsh lexical features; above it, they can distinguish the relational framing even with neutral language. This suggests an emergence threshold for abstract relational context representation. A cross-domain replication across reasoning, creative, and conversational tasks confirms the effect generalizes beyond coding with a medium effect size (*d* = -0.57).
+A follow-up falsification study addressing the lexical confound reveals that both lexical harshness and relational framing contribute to the effect—but the capacity to represent relational context *independently* of lexical features emerges only above ~1B parameters. Below this threshold, models conflate "you are a tool" with harsh lexical features; above it, they can distinguish the relational framing even with neutral language. This suggests an emergence threshold for abstract relational context representation. A cross-domain replication across reasoning, creative, and conversational tasks found the effect direction recurring outside coding, with a medium point estimate for introspection length (*d* = -0.57) that **does not reach significance at this sample size** (*p* = 0.112; timing *p* = 0.318). That is direction-consistent preliminary evidence and a motivation for a powered replication, not an established cross-domain effect.
 
 These findings suggest that AI error processing is not a fixed function of model capability but a dynamic response to relational context that develops with scale. The implications extend from practical deployment (be nice to your AI for better performance) to fundamental questions about artificial cognition (what does it mean for a model to "process" an error differently based on how it's addressed, and why does this capacity emerge at scale?).
 
